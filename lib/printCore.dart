@@ -117,7 +117,7 @@ void _drawKLineUnit(Rect rect,List lineTypes,Canvas canvas,double edgeSpace){
     for (var lineType in lineTypes) {
       KLineModel descModel = this.dataList.last;
       if (isShowCross) {
-        int selectIndex = crossLocation.dx ~/ (rect.width/drawUnitCount) - 1;
+        int selectIndex = crossLocation.dx ~/ (rect.width/drawUnitCount);
         if (selectIndex >= 0 && selectIndex < this.dataList.length) {
           descModel = this.dataList[selectIndex];
         }

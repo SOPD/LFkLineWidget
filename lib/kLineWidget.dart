@@ -48,7 +48,10 @@ class _KLineWidgetState extends State<KLineWidget>{
 
   @override
   void initState() {
+    widget.dataManager.onAppendData = (dataLength){
+      rightIndex += dataLength;
 
+    };
      controlTabManager.groups.clear();
      controlTabManager.mainGroup = KlineGroup(ratio: 1,components: defaultGroupMap[quotaTypeAVG],name: quotaTypeAVG,edgeSpace: 10);
 

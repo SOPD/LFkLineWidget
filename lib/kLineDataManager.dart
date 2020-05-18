@@ -8,7 +8,7 @@ class KLineDataManager{
 List<KLineModel> dataList;
 KlineParmManager parmManager;
 KlinePrintController printController;
-VoidCallback onAppendData;
+Function(int dataLnegth) onAppendData;
 
     @override
     KLineDataManager({Key key
