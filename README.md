@@ -1,7 +1,8 @@
 # LFkLineWidget fluter下全功能的k线控件 
 
-<img src="https://webfileserver-1300714616.cos.ap-shanghai.myqcloud.com/images/FlutterKline.gif" style="zoom:100%;" />
+<img src="https://github.com/SOPD/MyImageField/blob/master/FlutterKline.gif" style="zoom:100%;" />
 
+无依赖 支持web 图片打开较慢 可以在这里直接使用：[我的网站](http://106.54.214.239/#/kline)
 初步完成主要功能 
 
 ### 已完成  
@@ -30,7 +31,7 @@
 
 
 
-无依赖 支持web  可以在这里直接预览：[我的网站](http://106.54.214.239/#/kline)
+
 
 # 集成方式 
 
