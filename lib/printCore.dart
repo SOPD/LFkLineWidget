@@ -218,16 +218,17 @@ void _drawRSI(List<KLineModel> dataList,Canvas canvas,Rect rect){
     List<double> rsi1List = new List();
     List<double> rsi2List = new List();
     List<double> rsi3List = new List();
-    
-    for(int i = 0 ; i < dataList.length; i++) {
-      KLineModel model = dataList[i];
-       rsi1List.add(model.rsi1);
-       rsi2List.add(model.rsi2);
-       rsi3List.add(model.rsi3);
+
+      for(int i = 0 ; i < dataList.length; i++) {
+        KLineModel model = dataList[i];
+
+        rsi1List.add(model.rsi1);
+        rsi2List.add(model.rsi2);
+        rsi3List.add(model.rsi3);
     }
-    _drawLineContect(colorConfig.colorLine1, 1, rsi1List,0 , canvas, rect, 100,0);
-    _drawLineContect(colorConfig.colorLine2, 1, rsi2List,0 , canvas, rect, 100,0);
-    _drawLineContect(colorConfig.colorLine3, 1, rsi3List,0 , canvas, rect, 100,0);
+     _drawLineContect(colorConfig.colorLine1, 1, rsi1List,0 , canvas, rect, 100,0);
+     _drawLineContect(colorConfig.colorLine2, 1, rsi2List,0 , canvas, rect, 100,0);
+     _drawLineContect(colorConfig.colorLine3, 1, rsi3List,0 , canvas, rect, 100,0);
 
   }
 
@@ -290,7 +291,6 @@ void _drawMACD(List<KLineModel> dataList,Canvas canvas,Rect rect){
 void _drawVolLine(Color color,int count,Canvas canvas,Rect rect,double vol,double areaTop){
 
     double lineSpace = rect.width/drawUnitCount;
-
     _paint.color = color;
     _paint.strokeCap = StrokeCap.butt;
     _paint.isAntiAlias = true;

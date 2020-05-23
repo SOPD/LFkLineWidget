@@ -6,7 +6,7 @@ class KLineModel {
   final double bottom;
   final double open;
   final double close;
-  double lastClose;
+  double lastClose = 0;
   bool isChangeCycle = false;
     String time = "1970-01-01";
     double upDown = 0;
@@ -62,8 +62,16 @@ class KLineModel {
                     if (time == null) {
                       time = "1970-01-01";
                     }
+                    if(lastClose == null){
+                      lastClose = open;
 
-                    
+                    }
+                    if(upDown == null){
+                      upDown = close - lastClose;
+                    }
+                    if(upDownRate == null){
+                      upDownRate = (close - lastClose) / lastClose;
+                    }
                   }
 
 }

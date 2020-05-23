@@ -90,6 +90,7 @@ switch (lineType) {
  _calcuateMa(parmManager.getParm(parmMA3), this.dataList);
 
    for (var item in this.dataList) {
+
     item.ma1 = item.maMap[parmManager.getParm(parmMA1)];
     item.ma2 = item.maMap[parmManager.getParm(parmMA2)];
     item.ma3 = item.maMap[parmManager.getParm(parmMA3)];
@@ -103,9 +104,9 @@ switch (lineType) {
 
    for (var item in this.dataList) {
 
-    item.rsi1 = item.rsiMap[parmManager.getParm(parmRSI1)];
-    item.rsi2 = item.rsiMap[parmManager.getParm(parmRSI2)];
-    item.rsi3 = item.rsiMap[parmManager.getParm(parmRSI3)];
+     item.rsi1 = item.rsiMap[parmManager.getParm(parmRSI1)];
+     item.rsi2 = item.rsiMap[parmManager.getParm(parmRSI2)];
+     item.rsi3 = item.rsiMap[parmManager.getParm(parmRSI3)];
   }
  }
 
@@ -204,10 +205,13 @@ switch (lineType) {
    }
 
      void _caculateRSI(int parmdays,List<KLineModel> datalist){
+
         double rsiUp = 0;
         double rsiDown = 0;
+
        for(int i = 0 ; i < datalist.length;i++){
          KLineModel model = datalist[i];
+
         if (model.upDown > 0) {
           rsiUp = rsiUp + model.upDown / parmdays;
         }else{
@@ -220,15 +224,17 @@ switch (lineType) {
              rsiDown += datalist[i - parmdays].upDown / parmdays;
           }
         }
+
         if (rsiUp + rsiDown == 0) {
             model.rsiMap[parmdays] = 100;
-            return;
-        }
-         if (rsiUp == 0){
+
+        }else  if (rsiUp == 0){
             model.rsiMap[parmdays] = 0;
-            return;
-         }
-         model.rsiMap[parmdays] = rsiUp / (rsiUp + rsiDown) * 100;
+
+         }else{
+          model.rsiMap[parmdays] = rsiUp / (rsiUp + rsiDown) * 100;
+        }
+
        }
 
      }
