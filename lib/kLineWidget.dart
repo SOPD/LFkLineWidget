@@ -109,7 +109,19 @@ class _KLineWidgetState extends State<KLineWidget>{
 
             )),
           ),
-        ],)
+         Positioned(
+
+           child:  Container(
+             height: 80,
+             width:(widget.drawRect.width - 20) *  count / widget.dataManager.dataList.length ,
+             color: Color.fromRGBO(0, 0, 255, 100),
+           ),
+           left:(rightIndex - count + 0.5) / widget.dataManager.dataList.length * ( widget.drawRect.right - 10) + 10,
+           top: 5,
+         )
+        ],
+
+        )
         ,
         KlineTypeSwitchWidget(
            printController: widget.dataManager.printController,
