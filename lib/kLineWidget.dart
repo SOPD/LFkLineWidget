@@ -53,7 +53,7 @@ class _KLineWidgetState extends State<KLineWidget>{
 
     };
      controlTabManager.groups.clear();
-     controlTabManager.mainGroup = KlineGroup(ratio: 1,components: defaultGroupMap[quotaTypeAVG],name: quotaTypeAVG,edgeSpace: 10);
+     controlTabManager.mainGroup = KlineGroup(ratio: 1,components: defaultGroupMap[quotaTypeMA],name: quotaTypeMA,edgeSpace: 10);
 
     setDefaultShowParm();
 
@@ -64,6 +64,8 @@ class _KLineWidgetState extends State<KLineWidget>{
  
   @override
   Widget build(BuildContext context) {
+     Rect printRect = Rect.fromLTRB(10, widget.drawRect.top, widget.drawRect.right - 10, widget.drawRect.bottom);
+     double unitWidth = printRect.width / widget.dataManager.dataList.length;
     return   Flex(
       direction: Axis.vertical,
       mainAxisAlignment: MainAxisAlignment.start,
@@ -74,7 +76,7 @@ class _KLineWidgetState extends State<KLineWidget>{
             child:  Container(
               height: widget.drawRect.height == null?200:widget.drawRect.height + 20,
               width: MediaQuery.of(context).size.width,
-              child:CustomPaint(painter: KLinePainter(drawRect:Rect.fromLTRB(10, widget.drawRect.top, widget.drawRect.right - 10, widget.drawRect.bottom),
+              child:CustomPaint(painter: KLinePainter(drawRect:printRect,
                                                        dataList:this.showList(count, rightIndex, widget.dataManager.dataList),
                                                        isShowCross:this.isShowCross,
                                                        crossLocation:this.currentPressLocation,
@@ -110,13 +112,12 @@ class _KLineWidgetState extends State<KLineWidget>{
             )),
           ),
          Positioned(
-
            child:  Container(
              height: 80,
-             width:(widget.drawRect.width - 20) *  count / widget.dataManager.dataList.length ,
+             width:unitWidth * (count - 1),
              color: Color.fromRGBO(0, 0, 255, 100),
            ),
-           left:(rightIndex - count + 0.5) / widget.dataManager.dataList.length * ( widget.drawRect.right - 10) + 10,
+           left:unitWidth * 0.5 + 10 + (rightIndex - count) * unitWidth,
            top: 5,
          )
         ],
