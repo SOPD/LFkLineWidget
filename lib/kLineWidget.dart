@@ -22,10 +22,12 @@ class KLineWidget extends StatefulWidget{
     @override
      State<StatefulWidget> createState() {
 
-   return _KLineWidgetState();
+        return _KLineWidgetState();
   }
 
 }
+
+
 class _KLineWidgetState extends State<KLineWidget>{
 
   ScrollController controller = new ScrollController(keepScrollOffset: true,initialScrollOffset: 0,);
@@ -46,12 +48,21 @@ class _KLineWidgetState extends State<KLineWidget>{
 
   final KlinePrintController controlTabManager = KlinePrintController();
 
+@override 
+void dispose(){
+  bounceCounter.cancel();
+  super.dispose();
+}
+
   @override
   void initState() {
     widget.dataManager.onAppendData = (dataLength){
       rightIndex += dataLength;
 
     };
+    widget.dataManager.onResetData = (){
+      setDefaultShowParm();
+      };
      controlTabManager.groups.clear();
      controlTabManager.mainGroup = KlineGroup(ratio: 1,components: defaultGroupMap[quotaTypeMA],name: quotaTypeMA,edgeSpace: 10);
 
@@ -65,12 +76,17 @@ class _KLineWidgetState extends State<KLineWidget>{
   @override
   Widget build(BuildContext context) {
      Rect printRect = Rect.fromLTRB(10, widget.drawRect.top, widget.drawRect.right - 10, widget.drawRect.bottom);
-     double unitWidth = printRect.width / widget.dataManager.dataList.length;
-    return   Flex(
+      double unitWidth = printRect.width;
+     if(widget.dataManager.dataList.length > 0){
+
+      unitWidth = printRect.width / widget.dataManager.dataList.length;
+     }
+
+    return Flex(
       direction: Axis.vertical,
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[ 
+      children: <Widget>[
         Listener(
           child: GestureDetector(
             child:  Container(
@@ -84,7 +100,7 @@ class _KLineWidgetState extends State<KLineWidget>{
                                                        startIndex: rightIndex - count,
               colorConfig:widget.colorConfig,
               controller: widget.dataManager.printController
-            
+
               )),
             ),
             onScaleUpdate: onScaleUpdate,
@@ -93,6 +109,7 @@ class _KLineWidgetState extends State<KLineWidget>{
             onTapDown: onTapDown,
             onLongPress: onLongPress,
             onLongPressEnd: onLongPressEnd,
+          
           ),
           onPointerMove: onTouchsMove,
         ),
@@ -131,8 +148,8 @@ class _KLineWidgetState extends State<KLineWidget>{
               widget.dataManager.caculateDataList();
               setState(() {
               });
-           },    
-       ), 
+           },
+       ),
        KlineParmSetWidget(
          manager: widget.dataManager.parmManager,
          colorConfig: widget.colorConfig,
@@ -249,12 +266,13 @@ class _KLineWidgetState extends State<KLineWidget>{
 
  }
   
-   void onLongPress(){
+  void onLongPress(){
    isShowCross = true;
     setState(() {
      
    });
    }
+  
   void onLongPressEnd(LongPressEndDetails details){
    isShowCross = false;
    setState(() {
@@ -262,10 +280,9 @@ class _KLineWidgetState extends State<KLineWidget>{
    });
    }
 
-
   List<KLineModel> showList(int count,int rightIndex,List source){
 
-    if(count == null || rightIndex == null || source == null) return[];
+    if(count == 0 || rightIndex == 0 || source == []) return[];
 
     int start = rightIndex - count;
 
@@ -273,7 +290,7 @@ class _KLineWidgetState extends State<KLineWidget>{
 
     return source.sublist(start,rightIndex);
   }
-  
+
   void setDefaultShowParm(){
    if(widget.dataManager.dataList.length > 0){
      rightIndex = widget.dataManager.dataList.length;
@@ -281,7 +298,7 @@ class _KLineWidgetState extends State<KLineWidget>{
      rightIndex = 0;
    }
    count = 30;
-
+print('setdefault show ');
 }
   
   void moveLeft(){

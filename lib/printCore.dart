@@ -43,7 +43,7 @@ class KLinePainter extends CustomPainter{
 
  @override
  void paint(Canvas canvas, Size size) {
-if(dataList == null || this.drawRect == null){
+if(dataList == null || this.drawRect == null ){
   return;
 }
  this.drawKline(canvas);
@@ -77,8 +77,6 @@ padding += this.controller.padding;
    this.macdMax = 0.0000001;
    this.difDeaMax = 0.0000001;
 
-
-   this.dataList = dataList;
    for(int i = 0 ;i < dataList.length;i++){
      KLineModel model = dataList[i];
 
@@ -110,7 +108,7 @@ void _drawKLineUnit(Rect rect,List lineTypes,Canvas canvas,double edgeSpace){
   //画外框
    _drawRoundRect(colorConfig.colorBorder, 0.5, canvas,rect);
 
-      if(this.dataList == null){
+      if(this.dataList == null || this.dataList.length < 1){
         return;
       }
     

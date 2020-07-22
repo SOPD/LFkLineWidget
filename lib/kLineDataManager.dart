@@ -9,7 +9,7 @@ List<KLineModel> dataList;
 KlineParmManager parmManager;
 KlinePrintController printController;
 Function(int dataLnegth) onAppendData;
-
+Function() onResetData;
     @override
     KLineDataManager({Key key
                        ,this.dataList
@@ -21,7 +21,9 @@ Function(int dataLnegth) onAppendData;
 
 
 void completionLastClose(){
-
+  if(dataList == null || dataList.length < 1){
+    return;
+  }
   dataList[0].lastClose = dataList[0].open;
   for(int i = 1;i < dataList.length;i++){
     KLineModel pre = dataList[i-1];
@@ -30,14 +32,18 @@ void completionLastClose(){
   }
 }
 void completionAVG(){
-
+  if(dataList == null || dataList.length < 1){
+    return;
+  }
   for(int i = 0;i < dataList.length;i++){
     KLineModel cur = dataList[i];
     cur.avg = (cur.open + cur.close) / 2;
   }
 }
 void completionUpDown(){
-
+  if(dataList == null || dataList.length < 1){
+    return;
+  }
   for(int i = 0;i < dataList.length;i++){
     KLineModel cur = dataList[i];
     cur.upDown = cur.close - cur.lastClose;
@@ -50,6 +56,9 @@ void completionUpDown(){
 
 
 void caculateDataList(){
+  if(dataList == null || dataList.length < 1){
+    return;
+  }
   List<KlineGroup> groups = this.printController.getAllGroups();
   for (var item in groups) {
 
@@ -62,7 +71,9 @@ void caculateDataList(){
 
 
 void caculateWithLineType(String lineType){
-
+  if(dataList == null || dataList.length < 1){
+    return;
+  }
 switch (lineType) {
   case lineTypeMA:
     initMA();
@@ -85,6 +96,9 @@ switch (lineType) {
 }
 
  void initMA(){
+   if(dataList == null || dataList.length < 1){
+     return;
+   }
   _calcuateMa(parmManager.getParm(parmMA1), this.dataList);
   _calcuateMa(parmManager.getParm(parmMA2), this.dataList);
  _calcuateMa(parmManager.getParm(parmMA3), this.dataList);
@@ -98,6 +112,9 @@ switch (lineType) {
  }
 
  void initRSI(){
+   if(dataList == null || dataList.length < 1){
+     return;
+   }
   _caculateRSI(parmManager.getParm(parmRSI1), this.dataList);
   _caculateRSI(parmManager.getParm(parmRSI2), this.dataList);
   _caculateRSI(parmManager.getParm(parmRSI3), this.dataList);
@@ -112,6 +129,9 @@ switch (lineType) {
 
 
  void initVOLMA(){
+   if(dataList == null || dataList.length < 1){
+     return;
+   }
   _calcuateVolMa(parmManager.getParm(parmVOLMA1), this.dataList);
   _calcuateVolMa(parmManager.getParm(parmVOLMA2), this.dataList);
 
@@ -122,6 +142,9 @@ switch (lineType) {
  }
 
  void initEMA(){
+   if(dataList == null || dataList.length < 1){
+     return;
+   }
   _calcuateEMA(parmManager.getParm(parmEMA1), this.dataList);
   _calcuateEMA(parmManager.getParm(parmEMA2), this.dataList);
   _calcuateEMA(parmManager.getParm(parmEMA3), this.dataList);
@@ -133,11 +156,14 @@ switch (lineType) {
  }
 
   void initMACD(){
+    if(dataList == null || dataList.length < 1){
+      return;
+    }
   _caculateMACD(parmManager.getParm(parmMACDFast), parmManager.getParm(parmMACDSlow), parmManager.getParm(parmMACDSingal), this.dataList);
  }
 
  void _calcuateMa(int parmDays, List<KLineModel> datalist){
-    if(datalist == null || parmDays == null || parmDays < 1){
+    if(datalist == null || parmDays == null || parmDays < 1 || datalist.length < 1){
       return;
     }
      double cur = dataList[0].close;
@@ -153,7 +179,7 @@ switch (lineType) {
    }
  
  void _calcuateVolMa(int parmDays, List<KLineModel> datalist){
-    if(datalist == null || parmDays == null || parmDays < 1){
+    if(datalist == null || parmDays == null || parmDays < 1 || datalist.length < 1 || datalist.length < 1){
       return;
     }
       double cur = dataList[0].vol;
@@ -169,7 +195,7 @@ switch (lineType) {
    }
 
  void _calcuateEMA(int parmDays, List<KLineModel> datalist){
-     if(datalist == null || parmDays == null || parmDays < 1){
+     if(datalist == null || parmDays == null || parmDays < 1 || datalist.length < 1){
       return;
     }
      double emaCur = dataList[0].close;
@@ -188,7 +214,9 @@ switch (lineType) {
    }
 
    void _caculateMACD(int macdFast,int macdSlow,macdSignal, List<KLineModel> datalist){
-
+     if(datalist == null || datalist.length < 1){
+       return;
+     }
        double curSlow = dataList[0].close;
        double curFast = dataList[0].close;
        
@@ -205,7 +233,9 @@ switch (lineType) {
    }
 
      void _caculateRSI(int parmdays,List<KLineModel> datalist){
-
+       if(datalist == null || parmdays == null || parmdays < 1 || datalist.length < 1){
+         return;
+       }
         double rsiUp = 0;
         double rsiDown = 0;
 
